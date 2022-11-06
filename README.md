@@ -1,11 +1,29 @@
 # Storefront Backend Project
 
-## Getting Started
+ ## how to start:
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+ - ### the app runs on port 3000
+ - ### the database  port is  5432
 
-## Required Technologies
-Your application must make use of the following libraries:
+
+- #### after you download the zip file you will need to run ``` npm i``` in the terminal to download the node packages.
+
+- #### and then you must run the ```npm run create``` in the terminal, this command creates the the database, then go to the database.json file and add fill the empty value of the database on the dev object so you can run the migrations.
+
+- #### run ``` npm run migrate``` to create the talbes
+
+- #### to start the server use the script ``` npm run start``` and the app will run  .
+
+- #### to run the jasmine tests use the script ``` npm run tests1``` which it dose :
+
+  1. ##### set the variable ENV to "test" so the actions will be done to the testing data base
+  2. ##### create data base for teating 
+  3. ##### run the migrations that creates the 3 table (products,users and orders) for the testing database
+  4. ##### compile the ts file  to js files and run jasmine  
+  5. ##### finally delete the database after each test
+
+
+ ## Used Technologies :
 - Postgres for the database
 - Node/Express for the application logic
 - dotenv from npm for managing environment variables
@@ -13,42 +31,52 @@ Your application must make use of the following libraries:
 - jsonwebtoken from npm for working with JWTs
 - jasmine from npm for testing
 
-## Steps to Completion
+## scripts
+```
+-    create: "db-migrate db:create new_db",
+-    migrate:"db-migrate up --env dev",
+-    lint: "npx eslint src/**/*.ts"
+-    prettier: "npx prettier --write src/**/*.ts"
+-    start: "node dist/server.js",
+-    watch: "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
+-    testing: "set ENV=test&& db-migrate db:create nre_db_test&&db-migrate up --env test &&npm run tests&&db-migrate db:drop new_db_test"
+-    build: "npx tsc",
+```
 
-### 1. Plan to Meet Requirements
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
-
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
-
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+## Endpoints :
 
 **NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+### products :
+- #### /products/showAll (get)
+- #### /products/showById/id (get)
+- #### /products/createNew (require user's token) (post)
+### users :
+- #### /users/view   (gives the  user's token) (get)
+- #### /users/showById/id (require user's token) (get)
+- #### /users/createNew  (require user's token) (post)
+### orders :
+- #### /orders/createNew   (require user's token) (post)
+- #### /orders/add  (require user's token) (post)
+- #### /orders/showById  (require user's token) (get)
 
-### 2.  DB Creation and Migrations
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+## The data types based with the requests:
+#### note! : for all the incoming listed routes you need to bass the token that you will get when creating a user throw the header as as Bearer Token.
 
-### 3. Models
+### users routes:
+  
+- ##### for the  /users/showById/id route you only need to pass the id as a param
+- ##### for the /users/createNew route you need to pass first_name,lastName,password in the body
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+### products routes:
+   
+- ##### for the /products/showById/id route  you only need to pass the id as a param
+- ##### for the /products/createNew route you need to pass the name and the price in the body ,the price must be number
 
-### 4. Express Handlers
+### orders routes:
+- ##### for the /orders/add route  you need to pass (productId and quantity ) throw the body (the user's id is passed automatically) note : you need to pass an existing productId
+- ##### for the /orders/createNew route (status) throw the body (the user's id is passed automatically)
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
 
-### 5. JWTs
-
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
-
-### 6. QA and `README.md`
-
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
-
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
