@@ -6,15 +6,11 @@
  - ### the database  port is  5432
 
 
-- #### after you download the zip file you will need to run ``` npm i``` in the terminal to download the node packages.
-
-- #### and then you must run the ```npm run create``` in the terminal, this command creates the the database, then go to the database.json file and add fill the empty value of the database on the dev object so you can run the migrations.
-
 - #### run ``` npm run migrate``` to create the talbes
 
 - #### to start the server use the script ``` npm run start``` and the app will run  .
 
-- #### to run the jasmine tests use the script ``` npm run tests1``` which it dose :
+- #### to run the jasmine tests use the script ``` npm run testing``` which:
 
   1. ##### set the variable ENV to "test" so the actions will be done to the testing data base
   2. ##### create data base for teating 
@@ -46,7 +42,6 @@
 
 ## Endpoints :
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
 ### products :
 - #### /products/showAll (get)
 - #### /products/showById/id (get)
@@ -63,7 +58,6 @@
 
 
 ## The data types based with the requests:
-#### note! : for all the incoming listed routes you need to bass the token that you will get when creating a user throw the header as as Bearer Token.
 
 ### users routes:
   
